@@ -16,11 +16,13 @@ struct PokemonListView: View {
                 image
                     .image?
                     .resizable()
+                    .shadow(color: .green, radius: 5)
             }
             .scaledToFit()
-            .frame(width: 100, height: 100)
+            .frame(width: 100, height: 70)
 
             Text(pokemon.name)
+                .font(.title2)
         }
     }
 }
