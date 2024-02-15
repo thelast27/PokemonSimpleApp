@@ -16,7 +16,7 @@ struct PokemonListView: View {
                 image
                     .image?
                     .resizable()
-                    .shadow(color: .green, radius: 5)
+                    .shadow(color: .gray, radius: 5)
             }
             .scaledToFit()
             .frame(width: 100, height: 70)
