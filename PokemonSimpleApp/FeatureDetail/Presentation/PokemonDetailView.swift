@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PokemonDetailView: View {
     var id: Int
+    @State private var isAnimating = false
     @State private var pokemonDetail: PokemonDetailEntity?
     
     var body: some View {
@@ -20,19 +21,26 @@ struct PokemonDetailView: View {
                     image
                         .image?
                         .resizable()
+                        .shadow(color: .gray, radius: 10)
                 }
+                .scaleEffect(isAnimating ? 1.0 : 0.5)
+                .onAppear(perform: {
+                    withAnimation(.easeInOut(duration: 1)) {
+                         isAnimating = true
+                       }
+                })
                 .scaledToFit()
                 
                 Text(pokemonDetail?.pokemon.name ?? "")
                     .font(.title)
                 
                 VStack {
-                    Text("Height: \((pokemonDetail?.height ?? 0) * 10) cm")
-                        .font(.subheadline)
-                    Text("Weight: \((pokemonDetail?.weight ?? 0) / 10) kg")
-                        .font(.subheadline)
                     Text("Type: \(pokemonDetail?.types.first?.type.name ?? "")")
-                        .font(.subheadline)
+                        .font(.title2)
+                    Text("Weight: \((pokemonDetail?.weight ?? 0) / 10) kg")
+                        .font(.title2)
+                    Text("Height: \((pokemonDetail?.height ?? 0) * 10) cm")
+                        .font(.title2)
                 }
             }
         }
