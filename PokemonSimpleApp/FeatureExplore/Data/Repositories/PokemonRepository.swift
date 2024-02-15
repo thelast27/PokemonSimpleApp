@@ -9,7 +9,7 @@ import Foundation
 
 //data repository
 
-class ExploreRepository: ExploreRepositoryProtocol {
+class ExploreRepository: PokemonRepositoryProtocol {
     static let shared = ExploreRepository()
     
     private let exploreDataSource = ExploreDataSource()
