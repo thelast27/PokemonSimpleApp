@@ -30,6 +30,7 @@ struct PokemonExploreView: View {
                     }
                 }
             }
+            .navigationTitle("Explore Pokemons 🐉")
         }
         .task {
             loadMore()
