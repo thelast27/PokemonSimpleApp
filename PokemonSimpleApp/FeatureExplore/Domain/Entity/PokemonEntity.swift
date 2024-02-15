@@ -7,8 +7,6 @@
 
 import Foundation
 
-//This entity I use for UI moustly
-
 struct PokemonEntity: Hashable {
     let id: Int
     let name: String

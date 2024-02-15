@@ -8,8 +8,5 @@
 import Foundation
 
 struct PokemonListModel: Codable {
-    let count: Int
-    let next: String?
-    let previous: String?
     let results: [PokemonModel]
 }
