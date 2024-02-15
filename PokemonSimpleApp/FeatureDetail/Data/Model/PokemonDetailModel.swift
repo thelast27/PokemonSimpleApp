@@ -12,14 +12,13 @@ struct PokemonDetailModel: Codable {
     let name: String
     let height: Int
     let weight: Int
-    let types: [TypeElement]
+    let types: [PokemonType]
 }
 
-struct TypeElement: Codable {
+struct PokemonType: Codable {
     let type: Species
 }
 
 struct Species: Codable {
     let name: String
-    let url: String
 }

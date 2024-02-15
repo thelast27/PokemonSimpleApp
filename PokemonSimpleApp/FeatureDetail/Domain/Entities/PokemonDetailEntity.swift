@@ -11,7 +11,7 @@ struct PokemonDetailEntity {
     let pokemon: PokemonEntity
     let height: Int
     let weight: Int
-    let types: [TypeElement]
+    let types: [PokemonType]
     
     init?(pokemonDetailResponse: PokemonDetailModel) {
         guard let pokemon = PokemonEntity(pokemonDetailResponse: pokemonDetailResponse) else {
