@@ -12,4 +12,14 @@ struct PokemonDetailModel: Codable {
     let name: String
     let height: Int
     let weight: Int
+    let types: [TypeElement]
+}
+
+struct TypeElement: Codable {
+    let type: Species
+}
+
+struct Species: Codable {
+    let name: String
+    let url: String
 }

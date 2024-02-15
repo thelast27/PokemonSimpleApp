@@ -26,10 +26,12 @@ struct PokemonDetailView: View {
                 Text(pokemonDetail?.pokemon.name ?? "")
                     .font(.title)
                 
-                HStack {
-                    Text("Height: \(pokemonDetail?.height ?? 0)")
+                VStack {
+                    Text("Height: \((pokemonDetail?.height ?? 0) * 10) cm")
                         .font(.subheadline)
-                    Text("Weight: \(pokemonDetail?.weight ?? 0)")
+                    Text("Weight: \((pokemonDetail?.weight ?? 0) / 10) kg")
+                        .font(.subheadline)
+                    Text("Type: \(pokemonDetail?.types.first?.type.name ?? "")")
                         .font(.subheadline)
                 }
             }
