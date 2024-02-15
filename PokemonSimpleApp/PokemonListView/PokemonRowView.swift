@@ -12,7 +12,12 @@ struct PokemonRowView: View {
     let pokemonModel: PokemonModel
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Image("pokemon")
+                .shadow(color: .green, radius: 5)
+            Text("Bulbasaur")
+        }
+        .frame(width: 200, height: 50)
     }
 }
 

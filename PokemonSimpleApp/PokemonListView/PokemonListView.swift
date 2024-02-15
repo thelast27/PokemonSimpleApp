@@ -8,17 +8,32 @@
 import SwiftUI
 
 struct PokemonListView: View {
+    
+    @EnvironmentObject var vm: PokemonListViewModel
+    @State var isPresented = false
+    
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        List {
+            ForEach(vm.pokemons) { pokemon in
+                PokemonRowView(pokemonModel: pokemon)
+                    .sheet(isPresented: $isPresented, content: {
+                        PokemonDetailView()
+                            .presentationDetents([.fraction(0.2)])
+                    })
+                    .onTapGesture(perform: {
+                        isPresented.toggle()
+                    })
+            }
+        }.onAppear(perform: {
+            vm.getPokemons()
+        })
     }
 }
 
 #Preview {
-    PokemonListView()
+    NavigationView {
+        PokemonListView()
+    }
+    .environmentObject(PokemonListViewModel())
 }
