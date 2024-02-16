@@ -9,32 +9,49 @@ import Foundation
 import SwiftUI
 
 struct PokemonExploreView: View {
+    
     let getPokemonListUseCase: GetPokemonListUseCase = GetPokemonListUseCase(pokemonRepository: ExploreRepository.shared)
+    let limit: Int = 20
     
     @State private var pokemonList: [PokemonEntity] = []
     @State private var offset: Int = 0
     
     @Environment(\.managedObjectContext) var context
-    @FetchRequest(entity: Pokemon.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Pokemon.name, ascending: true)]) var results : FetchedResults<Pokemon>
-    
-    let limit: Int = 20
+    @FetchRequest(sortDescriptors: []) private var results: FetchedResults<Pokemon>
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(pokemonList, id: \.self) { pokemon in
-                    NavigationLink(destination: PokemonDetailView(id: pokemon.id)) {
-                        PokemonListView(pokemon: pokemon)
-                            .onAppear(perform: {
-                                print("RESULTS IS \(results)")
-                                if pokemonList.last == pokemon {
-                                    loadMore()
-                                }
-                            })
+                if results.isEmpty {
+                    ForEach(pokemonList, id: \.self) { pokemon in
+                        NavigationLink(destination: PokemonDetailView(id: pokemon.id)) {
+                            PokemonListView(pokemon: pokemon)
+                                .onAppear(perform: {
+                                    if pokemonList.last == pokemon {
+                                        loadMore()
+                                    }
+                                })
+                        }
+                    }
+                } else {
+                    ForEach(results) { pokemon in
+                        PokemonListView(pokemonCache: pokemon)
                     }
                 }
             }
             .navigationTitle("Explore Pokemons 🐉")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        for i in results {
+                            context.delete(i)
+                        }
+                    } label: {
+                        Text("Clear CD")
+                    }
+
+                }
+            }
         }
         .task {
             loadMore()
