@@ -13,6 +13,10 @@ struct PokemonExploreView: View {
     
     @State private var pokemonList: [PokemonEntity] = []
     @State private var offset: Int = 0
+    
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(entity: Pokemon.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Pokemon.name, ascending: true)]) var results : FetchedResults<Pokemon>
+    
     let limit: Int = 20
     
     var body: some View {
@@ -22,6 +26,7 @@ struct PokemonExploreView: View {
                     NavigationLink(destination: PokemonDetailView(id: pokemon.id)) {
                         PokemonListView(pokemon: pokemon)
                             .onAppear(perform: {
+                                print("RESULTS IS \(results)")
                                 if pokemonList.last == pokemon {
                                     loadMore()
                                 }
@@ -39,7 +44,7 @@ struct PokemonExploreView: View {
     private func loadMore() {
         Task {
             do {
-                let newPokemonList = try await getPokemonListUseCase.execute(limit: limit, offset: offset)
+                let newPokemonList = try await getPokemonListUseCase.execute(context: context, limit: limit, offset: offset)
                 pokemonList += newPokemonList
                 
                 offset += newPokemonList.count

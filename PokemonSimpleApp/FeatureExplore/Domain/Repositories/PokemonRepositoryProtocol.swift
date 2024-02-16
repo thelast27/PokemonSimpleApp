@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import CoreData
 
 //thanks to this protocol, class will depends on the abstraction
 
 protocol PokemonRepositoryProtocol {
-    func fetchPokemons(limit: Int, offset: Int) async throws -> [PokemonEntity]
+    func fetchPokemons(context: NSManagedObjectContext, limit: Int, offset: Int) async throws -> [PokemonEntity]
 }
