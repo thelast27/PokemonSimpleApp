@@ -22,7 +22,7 @@ struct PokemonExploreView: View {
     var body: some View {
         NavigationStack {
             List {
-                if results.isEmpty {
+                if results.isEmpty || !results.isEmpty && !pokemonList.isEmpty {
                     ForEach(pokemonList, id: \.self) { pokemon in
                         NavigationLink(destination: PokemonDetailView(id: pokemon.id)) {
                             PokemonListView(pokemon: pokemon)
@@ -33,7 +33,7 @@ struct PokemonExploreView: View {
                                 })
                         }
                     }
-                } else {
+                } else if !results.isEmpty && pokemonList.isEmpty {
                     ForEach(results) { pokemon in
                         PokemonListView(pokemonCache: pokemon)
                     }
@@ -47,9 +47,8 @@ struct PokemonExploreView: View {
                             context.delete(i)
                         }
                     } label: {
-                        Text("Clear CD")
+                        Text("Clear DB")
                     }
-
                 }
             }
         }

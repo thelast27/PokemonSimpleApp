@@ -17,7 +17,8 @@ class ExploreRepository: PokemonRepositoryProtocol {
         let pokemonsListResponse: PokemonListModel = try await exploreDataSource.fetchPokemons(context: context, limit: limit, offset: offset)
         let pokemonResponses: [PokemonModel] = pokemonsListResponse.results
         let pokemonEntities: [PokemonEntity] = pokemonResponses.compactMap { pokemon in
-            CoreDataManager().saveData(context: context, name: pokemon.name, url: pokemon.url)
+            let pokemonImageURL = PokemonEntity(pokemonResponse: pokemon)?.imageURL
+            CoreDataManager().saveData(context: context, name: pokemon.name, url: pokemonImageURL ?? "")
             return PokemonEntity(pokemonResponse: pokemon)
         }
         
