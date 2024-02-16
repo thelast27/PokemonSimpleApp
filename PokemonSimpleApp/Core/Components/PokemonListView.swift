@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct PokemonListView: View {
-    var pokemon: PokemonEntity
+    var pokemon: PokemonEntity?
+    var pokemonCache: Pokemon?
 
     var body: some View {
         HStack {
-            AsyncImage(url: URL(string: pokemon.imageURL)) { image in
+            AsyncImage(url: URL(string: pokemon == nil ? pokemonCache?.url ?? "" : pokemon?.imageURL ?? "")) { image in
                 image
                     .image?
                     .resizable()
@@ -21,7 +22,7 @@ struct PokemonListView: View {
             .scaledToFit()
             .frame(width: 100, height: 70)
 
-            Text(pokemon.name)
+            Text((pokemon == nil ? pokemonCache?.name : pokemon?.name) ?? "")
                 .font(.title2)
         }
     }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 // Class for getting the Pokemon list from the repository
 
@@ -16,7 +17,7 @@ class GetPokemonListUseCase {
         self.repository = pokemonRepository
     }
     
-    func execute(limit: Int, offset: Int) async throws -> [PokemonEntity] {
-        return try await repository.fetchPokemons(limit: limit, offset: offset)
+    func execute(context: NSManagedObjectContext, limit: Int, offset: Int) async throws -> [PokemonEntity] {
+        return try await repository.fetchPokemons(context: context, limit: limit, offset: offset)
     }
 }

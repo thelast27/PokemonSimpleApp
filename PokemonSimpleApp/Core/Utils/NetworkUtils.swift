@@ -25,4 +25,16 @@ class NetworkUtils {
         
         return decodedData
     }
+    
+    func downloadImage(from url: String, completion: @escaping (Data) -> (Void)) -> Void {
+        
+        guard let url = URL(string: url) else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            
+            guard let data = data, error == nil else {
+                return
+            }
+        }.resume()
+    }
 }

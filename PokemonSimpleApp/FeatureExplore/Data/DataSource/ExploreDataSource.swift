@@ -6,11 +6,10 @@
 //
 
 import Foundation
-
-//I fetch a pokemon list here
+import CoreData
 
 class ExploreDataSource {
-    func fetchPokemons(limit: Int, offset: Int) async throws -> PokemonListModel {
+    func fetchPokemons(context: NSManagedObjectContext, limit: Int, offset: Int) async throws -> PokemonListModel {
         guard let url: URL = Constants.APIEndpoint.getPokemonList(limit: limit, offset: offset).url else {
             throw URLError(.badURL)
         }

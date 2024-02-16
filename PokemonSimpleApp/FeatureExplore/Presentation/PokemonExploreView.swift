@@ -9,27 +9,48 @@ import Foundation
 import SwiftUI
 
 struct PokemonExploreView: View {
+    
     let getPokemonListUseCase: GetPokemonListUseCase = GetPokemonListUseCase(pokemonRepository: ExploreRepository.shared)
+    let limit: Int = 20
     
     @State private var pokemonList: [PokemonEntity] = []
     @State private var offset: Int = 0
-    let limit: Int = 20
+    
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(sortDescriptors: []) private var results: FetchedResults<Pokemon>
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(pokemonList, id: \.self) { pokemon in
-                    NavigationLink(destination: PokemonDetailView(id: pokemon.id)) {
-                        PokemonListView(pokemon: pokemon)
-                            .onAppear(perform: {
-                                if pokemonList.last == pokemon {
-                                    loadMore()
-                                }
-                            })
+                if results.isEmpty || !results.isEmpty && !pokemonList.isEmpty {
+                    ForEach(pokemonList, id: \.self) { pokemon in
+                        NavigationLink(destination: PokemonDetailView(id: pokemon.id)) {
+                            PokemonListView(pokemon: pokemon)
+                                .onAppear(perform: {
+                                    if pokemonList.last == pokemon {
+                                        loadMore()
+                                    }
+                                })
+                        }
+                    }
+                } else if !results.isEmpty && pokemonList.isEmpty {
+                    ForEach(results) { pokemon in
+                        PokemonListView(pokemonCache: pokemon)
                     }
                 }
             }
             .navigationTitle("Explore Pokemons 🐉")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        for i in results {
+                            context.delete(i)
+                        }
+                    } label: {
+                        Text("Clear DB")
+                    }
+                }
+            }
         }
         .task {
             loadMore()
@@ -39,7 +60,7 @@ struct PokemonExploreView: View {
     private func loadMore() {
         Task {
             do {
-                let newPokemonList = try await getPokemonListUseCase.execute(limit: limit, offset: offset)
+                let newPokemonList = try await getPokemonListUseCase.execute(context: context, limit: limit, offset: offset)
                 pokemonList += newPokemonList
                 
                 offset += newPokemonList.count
