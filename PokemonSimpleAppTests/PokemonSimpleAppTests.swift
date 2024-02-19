@@ -9,28 +9,50 @@ import XCTest
 @testable import PokemonSimpleApp
 
 final class PokemonSimpleAppTests: XCTestCase {
+    
+    private let networkUtils = NetworkUtils.shared
+    private let constants = Constants()
+    private let limit: Int = 20
+    private let offset: Int = 0
+    private let url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png"
+    private let urlSession = URLSession(configuration: .default)
+    private let networkMonitor = NetworkMonitor.shared
+    
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        try super.setUpWithError()
+        
     }
-
+    
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        
+        try super.tearDownWithError()
     }
+//MARK: -
+    func testValidApiCallGetsHTTPStatusCode200() throws  {
+        //check accert code200 for "Get image url" 
+        
+        try XCTSkipUnless(
+            networkMonitor.isReachable,
+          "Network connectivity needed for this test.")
+        
+        // given
+        guard let url = URL(string: url) else { return }
+        let promise = expectation(description: "Completion handler invoked")
+        var statusCode: Int?
+        var responseError: Error?
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        // when
+        let dataTask = urlSession.dataTask(with: url) { _, response, error in
+          statusCode = (response as? HTTPURLResponse)?.statusCode
+          responseError = error
+          promise.fulfill()
         }
-    }
+        dataTask.resume()
+        wait(for: [promise], timeout: 5)
 
+        // then
+        XCTAssertNil(responseError)
+        XCTAssertEqual(statusCode, 200)
+    }
 }
