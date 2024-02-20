@@ -35,14 +35,10 @@ struct PokemonExploreView: View {
                                     })
                             }
                         }
-                    } else if !results.isEmpty && pokemonList.isEmpty {
-                        ForEach(results) { pokemon in
-                            PokemonListView(pokemonCache: pokemon)
-                        }
                     }
                 }
                 .navigationTitle("Explore Pokemons 🐉")
-
+                
                 Text(networkMonitor.isReachable ? "" : "It seems you are offline.. 😢")
             }
         }
