@@ -12,6 +12,7 @@ struct PokemonExploreView: View {
     
     let getPokemonListUseCase: GetPokemonListUseCase = GetPokemonListUseCase(pokemonRepository: ExploreRepository.shared)
     let limit: Int = 20
+    private let networkMonitor = NetworkMonitor.shared
     
     @State private var pokemonList: [PokemonEntity] = []
     @State private var offset: Int = 0
@@ -21,35 +22,24 @@ struct PokemonExploreView: View {
     
     var body: some View {
         NavigationStack {
-            List {
-                if results.isEmpty || !results.isEmpty && !pokemonList.isEmpty {
-                    ForEach(pokemonList, id: \.self) { pokemon in
-                        NavigationLink(destination: PokemonDetailView(id: pokemon.id)) {
-                            PokemonListView(pokemon: pokemon)
-                                .onAppear(perform: {
-                                    if pokemonList.last == pokemon {
-                                        loadMore()
-                                    }
-                                })
+            VStack {
+                List {
+                    if results.isEmpty || !results.isEmpty && !pokemonList.isEmpty {
+                        ForEach(pokemonList, id: \.self) { pokemon in
+                            NavigationLink(destination: PokemonDetailView(id: pokemon.id)) {
+                                PokemonListView(pokemon: pokemon)
+                                    .onAppear(perform: {
+                                        if pokemonList.last == pokemon {
+                                            loadMore()
+                                        }
+                                    })
+                            }
                         }
                     }
-                } else if !results.isEmpty && pokemonList.isEmpty {
-                    ForEach(results) { pokemon in
-                        PokemonListView(pokemonCache: pokemon)
-                    }
                 }
-            }
-            .navigationTitle("Explore Pokemons 🐉")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        for i in results {
-                            context.delete(i)
-                        }
-                    } label: {
-                        Text("Clear DB")
-                    }
-                }
+                .navigationTitle("Explore Pokemons 🐉")
+                
+                Text(networkMonitor.isReachable ? "" : "It seems you are offline.. 😢")
             }
         }
         .task {
@@ -76,4 +66,3 @@ struct PokemonExploreView_Previews: PreviewProvider {
         PokemonExploreView()
     }
 }
-

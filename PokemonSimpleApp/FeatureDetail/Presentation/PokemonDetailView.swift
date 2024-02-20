@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct PokemonDetailView: View {
+    
+    private let networkMonitor = NetworkMonitor.shared
     var id: Int
     @State private var isAnimating = false
     @State private var pokemonDetail: PokemonDetailEntity?
     
     var body: some View {
         VStack {
-            if pokemonDetail == nil {
-                Text("Loading...")
+            if pokemonDetail == nil && !networkMonitor.isReachable {
+                VStack {
+                    Text(networkMonitor.isReachable ? "" : "It seems you are offline.. 😢")
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                }
             } else {
                 AsyncImage(url: URL(string: pokemonDetail?.pokemon.imageURL ?? "")) { image in
                     image
@@ -26,8 +32,8 @@ struct PokemonDetailView: View {
                 .scaleEffect(isAnimating ? 1.0 : 0.5)
                 .onAppear(perform: {
                     withAnimation(.easeInOut(duration: 1)) {
-                         isAnimating = true
-                       }
+                        isAnimating = true
+                    }
                 })
                 .scaledToFit()
                 
@@ -53,7 +59,6 @@ struct PokemonDetailView: View {
         Task {
             do {
                 let getPokemonDetailUseCase = GetPokemonDetailUseCase(repository: DetailRepository.shared)
-            
                 
                 self.pokemonDetail = try await getPokemonDetailUseCase.execute(id: id)
             } catch {
