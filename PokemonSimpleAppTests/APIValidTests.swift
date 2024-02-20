@@ -22,9 +22,8 @@ final class PokemonSimpleAppTests: XCTestCase {
         
         try super.tearDownWithError()
     }
-    //MARK: -
+    //MARK: - tests
     func testValidApiCallCode200PokemonImage() throws  {
-        //check accert code200 for "Get image url"
         
         let url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png"
         
@@ -46,12 +45,11 @@ final class PokemonSimpleAppTests: XCTestCase {
         wait(for: [promise], timeout: 5)
         
         XCTAssertNil(responseError)
-        XCTAssertEqual(statusCode, 200)
+        XCTAssertEqual(statusCode, 200, "check accert code200 for Get pokemon image url")
     }
     
     func testValidApiCallCode200PokemonList() throws {
-        //check accert code200 for "Get pokemon list url"
-        
+
         let limit: Int = 20
         let offset: Int = 0
         let url = "https://pokeapi.co/api/v2/pokemon?limit=\(limit)&offset=\(offset)"
@@ -74,6 +72,6 @@ final class PokemonSimpleAppTests: XCTestCase {
         wait(for: [promise], timeout: 5)
         
         XCTAssertNil(responseError)
-        XCTAssertEqual(statusCode, 200)
+        XCTAssertEqual(statusCode, 200, "check accert code200 for Get pokemon list url")
     }
 }
