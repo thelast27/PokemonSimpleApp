@@ -9,16 +9,16 @@ import SwiftUI
 
 struct PokemonDetailView: View {
     
-    private let networkMonitor = NetworkMonitor.shared
     var id: Int
     @State private var isAnimating = false
+    @State private var networkMonitor = NetworkMonitor()
     @StateObject var vm = PokemonDetailViewModel()
     
     var body: some View {
         VStack {
-            if vm.pokemonDetail == nil && !networkMonitor.isReachable {
+            if vm.pokemonDetail == nil && !networkMonitor.isConnected {
                 VStack {
-                    Text(networkMonitor.isReachable ? "" : "It seems you are offline.. 😢")
+                    Text(networkMonitor.isConnected ? "" : "It seems you are offline.. 😢")
                     ProgressView()
                         .progressViewStyle(.circular)
                 }

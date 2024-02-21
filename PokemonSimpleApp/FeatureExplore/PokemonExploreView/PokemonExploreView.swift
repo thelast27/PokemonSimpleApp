@@ -11,8 +11,7 @@ import SwiftUI
 struct PokemonExploreView: View {
     
     @StateObject var vm = PokemonListViewModel()
-    private let networkMonitor = NetworkMonitor.shared
-    @FetchRequest(sortDescriptors: []) private var results: FetchedResults<Pokemon>
+    @State private var networkMonitor = NetworkMonitor()
     
     var body: some View {
         NavigationStack {
@@ -26,7 +25,6 @@ struct PokemonExploreView: View {
                                         if vm.pokemonList.last == pokemon {
                                             try await vm.loadMore()
                                         }
-                                        
                                     } catch {
                                         print("get pokeon list error")
                                     }
@@ -36,7 +34,7 @@ struct PokemonExploreView: View {
                 }
                 .navigationTitle("Explore Pokemons 🐉")
                 
-                Text(networkMonitor.isReachable ? "" : "It seems you are offline.. 😢")
+                Text(networkMonitor.isConnected ? "" : "It seems you are offline.. 😢")
             }
         }
         .task {

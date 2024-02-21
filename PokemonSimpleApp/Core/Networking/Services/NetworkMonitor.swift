@@ -5,28 +5,19 @@
 //  Created by Eldar Garbuzov on 19.02.24.
 //
 
+import Foundation
 import Network
 
+@Observable
 class NetworkMonitor {
-  static let shared = NetworkMonitor()
-  var isReachable: Bool { status == .satisfied }
-
-  private let monitor = NWPathMonitor()
-    private var status = NWPath.Status.requiresConnection
-
-  private init() {
-    startMonitoring()
-  }
-
-  func startMonitoring() {
-    monitor.pathUpdateHandler = { [weak self] path in
-      self?.status = path.status
+    private let networkMonitor = NWPathMonitor()
+    private let workerQueue = DispatchQueue(label: "Monitor")
+    var isConnected = false
+    
+    init() {
+        networkMonitor.pathUpdateHandler = { path in
+            self.isConnected = path.status == .satisfied
+        }
+        networkMonitor.start(queue: workerQueue)
     }
-    let queue = DispatchQueue(label: "NetworkMonitor")
-    monitor.start(queue: queue)
-  }
-
-  func stopMonitoring() {
-    monitor.cancel()
-  }
 }
