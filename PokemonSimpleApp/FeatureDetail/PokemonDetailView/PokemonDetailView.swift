@@ -12,18 +12,18 @@ struct PokemonDetailView: View {
     private let networkMonitor = NetworkMonitor.shared
     var id: Int
     @State private var isAnimating = false
-    @State private var pokemonDetail: PokemonDetailEntity?
+    @StateObject var vm = PokemonDetailViewModel()
     
     var body: some View {
         VStack {
-            if pokemonDetail == nil && !networkMonitor.isReachable {
+            if vm.pokemonDetail == nil && !networkMonitor.isReachable {
                 VStack {
                     Text(networkMonitor.isReachable ? "" : "It seems you are offline.. 😢")
                     ProgressView()
                         .progressViewStyle(.circular)
                 }
             } else {
-                AsyncImage(url: URL(string: pokemonDetail?.pokemon.imageURL ?? "")) { image in
+                AsyncImage(url: URL(string: vm.pokemonDetail?.pokemon.imageURL ?? "")) { image in
                     image
                         .image?
                         .resizable()
@@ -37,32 +37,24 @@ struct PokemonDetailView: View {
                 })
                 .scaledToFit()
                 
-                Text(pokemonDetail?.pokemon.name ?? "")
+                Text(vm.pokemonDetail?.pokemon.name ?? "")
                     .font(.title)
                 
                 VStack {
-                    Text("Type: \(pokemonDetail?.types.first?.type.name ?? "")")
+                    Text("Type: \(vm.pokemonDetail?.types.first?.type.name ?? "")")
                         .font(.title2)
-                    Text("Weight: \((pokemonDetail?.weight ?? 0) / 10) kg")
+                    Text("Weight: \((vm.pokemonDetail?.weight ?? 0) / 10) kg")
                         .font(.title2)
-                    Text("Height: \((pokemonDetail?.height ?? 0) * 10) cm")
+                    Text("Height: \((vm.pokemonDetail?.height ?? 0) * 10) cm")
                         .font(.title2)
                 }
             }
         }
         .task {
-            loadDetail(id: id)
-        }
-    }
-    
-    func loadDetail(id: Int) {
-        Task {
             do {
-                let getPokemonDetailUseCase = GetPokemonDetailUseCase(repository: DetailRepository.shared)
-                
-                self.pokemonDetail = try await getPokemonDetailUseCase.execute(id: id)
+                try await vm.loadDetail(id: id)
             } catch {
-                print("Error: \(error)")
+                print("get pokeon list error")
             }
         }
     }
