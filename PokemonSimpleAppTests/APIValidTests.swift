@@ -11,7 +11,7 @@ import XCTest
 final class PokemonSimpleAppTests: XCTestCase {
     
     private let urlSession = URLSession(configuration: .default)
-    private let networkMonitor = NetworkMonitor.shared
+    private let networkMonitor = NetworkMonitor()
     
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -28,7 +28,7 @@ final class PokemonSimpleAppTests: XCTestCase {
         let url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png"
         
         try XCTSkipUnless(
-            networkMonitor.isReachable,
+            networkMonitor.isConnected,
             "Network connection needed for this test.")
         
         guard let url = URL(string: url) else { return }
@@ -55,7 +55,7 @@ final class PokemonSimpleAppTests: XCTestCase {
         let url = "https://pokeapi.co/api/v2/pokemon?limit=\(limit)&offset=\(offset)"
         
         try XCTSkipUnless(
-            networkMonitor.isReachable,
+            networkMonitor.isConnected,
             "Network connection needed for this test.")
 
         guard let url = URL(string: url) else { return }

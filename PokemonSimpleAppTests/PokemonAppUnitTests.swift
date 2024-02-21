@@ -26,8 +26,8 @@ class PokemonAppUnitTests: XCTestCase {
         coreDataManager = CoreDataManager()
         container = NSPersistentContainer(name: "CoreJSON")
         context = container?.viewContext
-        getPokemonList = GetPokemonListUseCase(pokemonRepository: ExploreRepository.shared)
-        getPokemonDetail = GetPokemonDetailUseCase(repository: DetailRepository.shared)
+        getPokemonList = GetPokemonListUseCase(pokemonRepository: ExploreRepository())
+        getPokemonDetail = GetPokemonDetailUseCase(repository: DetailRepository())
     }
     
     override func tearDownWithError() throws {
@@ -62,7 +62,7 @@ class PokemonAppUnitTests: XCTestCase {
         let height = 11
         let weight = 320
         let type = "bug"
-        let getPokemonDetailUseCase = GetPokemonDetailUseCase(repository: DetailRepository.shared)
+        let getPokemonDetailUseCase = GetPokemonDetailUseCase(repository: DetailRepository())
         var pokemonDetail: PokemonDetailEntity?
         
         pokemonDetail = try await getPokemonDetailUseCase.execute(id: id)
