@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Constants {
+struct PokemonService {
     static let pokeApiURL: String = "https://pokeapi.co/api/v2/"
     static let pokeApiArtworkURL: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/%d.png"
     static let pokeApiTimeoutInterval: Double = 15.0

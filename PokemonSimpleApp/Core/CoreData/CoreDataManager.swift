@@ -22,7 +22,7 @@ final class CoreDataManager: ObservableObject {
         let entity = Pokemon(context: context)
         entity.name = name
         entity.url = url
-        NetworkUtils().downloadImage(from: url) { image in
+        NetworkManager().downloadImage(from: url) { image in
             entity.image = UIImage(data: image)
         }
         

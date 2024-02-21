@@ -10,10 +10,10 @@ import CoreData
 
 class ExploreDataSource {
     func fetchPokemons(context: NSManagedObjectContext, limit: Int, offset: Int) async throws -> PokemonListModel {
-        guard let url: URL = Constants.APIEndpoint.getPokemonList(limit: limit, offset: offset).url else {
+        guard let url: URL = PokemonService.APIEndpoint.getPokemonList(limit: limit, offset: offset).url else {
             throw URLError(.badURL)
         }
         
-        return try await NetworkUtils.shared.fetch(from: url)
+        return try await NetworkManager.shared.fetch(from: url)
     }
 }

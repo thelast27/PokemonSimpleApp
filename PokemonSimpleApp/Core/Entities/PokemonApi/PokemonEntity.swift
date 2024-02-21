@@ -21,12 +21,12 @@ struct PokemonEntity: Hashable {
         
         self.id = id
         self.name = pokemonResponse.name
-        self.imageURL = Constants.APIEndpoint.getPokemonImage(id: id).url?.absoluteString ?? ""
+        self.imageURL = PokemonService.APIEndpoint.getPokemonImage(id: id).url?.absoluteString ?? ""
     }
     
     init?(pokemonDetailResponse: PokemonDetailModel) {
         self.id = pokemonDetailResponse.id
         self.name = pokemonDetailResponse.name
-        self.imageURL = Constants.APIEndpoint.getPokemonImage(id: id).url?.absoluteString ?? ""
+        self.imageURL = PokemonService.APIEndpoint.getPokemonImage(id: id).url?.absoluteString ?? ""
     }
 }
