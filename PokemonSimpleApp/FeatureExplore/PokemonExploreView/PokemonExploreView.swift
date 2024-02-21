@@ -35,6 +35,9 @@ struct PokemonExploreView: View {
                 .navigationTitle("Explore Pokemons 🐉")
                 
                 Text(networkMonitor.isConnected ? "" : "It seems you are offline.. 😢")
+                Spacer()
+                Text(!vm.animate ? "" : "This is the entire available list. To see more please check your network connection 🛜")
+                    .padding(.horizontal)
             }
         }
         .task {

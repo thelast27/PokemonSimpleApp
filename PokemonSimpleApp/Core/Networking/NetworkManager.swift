@@ -32,9 +32,7 @@ class NetworkManager {
         
         URLSession.shared.dataTask(with: url) { data, _, error in
             
-            guard let data = data, error == nil else {
-                return
-            }
+            guard let data = data, error == nil else { return }
         }.resume()
     }
 }

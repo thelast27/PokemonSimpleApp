@@ -13,7 +13,8 @@ class PokemonListViewModel: ObservableObject {
     let getPokemonListUseCase: GetPokemonListUseCase = GetPokemonListUseCase(pokemonRepository: ExploreRepository.shared)
     
     @Published private var offset: Int = 0
-    @Published var pokemonList: [PokemonEntity] = []    
+    @Published var animate = false
+    @Published var pokemonList: [PokemonEntity] = []
     
     func loadMore() async throws {
         Task {
@@ -25,6 +26,9 @@ class PokemonListViewModel: ObservableObject {
                 }
             } catch {
                 print("Error occurred: \(error)")
+                DispatchQueue.main.async {
+                    self.animate.toggle()
+                }
             }
         }
     }
