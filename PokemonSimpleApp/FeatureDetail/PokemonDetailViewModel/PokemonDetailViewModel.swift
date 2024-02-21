@@ -15,7 +15,7 @@ class PokemonDetailViewModel: ObservableObject {
     func loadDetail(id: Int) async throws {
         Task {
             do {
-                let getPokemonDetailUseCase = GetPokemonDetailUseCase(repository: DetailRepository.shared)
+                let getPokemonDetailUseCase = GetPokemonDetailUseCase(repository: DetailRepository())
                 
                 self.pokemonDetail = try await getPokemonDetailUseCase.execute(id: id)
             } catch {

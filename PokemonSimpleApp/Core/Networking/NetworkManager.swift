@@ -9,8 +9,6 @@ import Foundation
 
 class NetworkManager {
     
-    static let shared = NetworkManager()
-    
     func fetch<T: Codable>(from url: URL) async throws -> T {
         var request = URLRequest(url: url)
         request.timeoutInterval = PokemonService.pokeApiTimeoutInterval

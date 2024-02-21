@@ -8,7 +8,6 @@
 import Foundation
 
 class DetailRepository: DetailRepositoryProtocol {
-    static let shared = DetailRepository()
     
     private let detailDataSource = DetailDataSource()
     

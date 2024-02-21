@@ -10,8 +10,6 @@ import SwiftUI
 
 final class CoreDataManager: ObservableObject {
     
-    static let shared = CoreDataManager()
-    
     let container: NSPersistentContainer
     
     var context: NSManagedObjectContext {

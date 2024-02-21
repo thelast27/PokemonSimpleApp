@@ -14,6 +14,6 @@ class ExploreDataSource {
             throw URLError(.badURL)
         }
         
-        return try await NetworkManager.shared.fetch(from: url)
+        return try await NetworkManager().fetch(from: url)
     }
 }

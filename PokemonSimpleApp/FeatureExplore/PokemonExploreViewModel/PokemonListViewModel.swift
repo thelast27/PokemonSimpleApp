@@ -10,7 +10,7 @@ import SwiftUI
 class PokemonListViewModel: ObservableObject {
     
     let limit: Int = 20
-    let getPokemonListUseCase: GetPokemonListUseCase = GetPokemonListUseCase(pokemonRepository: ExploreRepository.shared)
+    let getPokemonListUseCase: GetPokemonListUseCase = GetPokemonListUseCase(pokemonRepository: ExploreRepository())
     
     @Published private var offset: Int = 0
     @Published var animate = false
@@ -19,7 +19,7 @@ class PokemonListViewModel: ObservableObject {
     func loadMore() async throws {
         Task {
             do {
-                let newPokemonList = try await getPokemonListUseCase.execute(context: CoreDataManager.shared.context, limit: limit, offset: offset)
+                let newPokemonList = try await getPokemonListUseCase.execute(context: CoreDataManager().context, limit: limit, offset: offset)
                 DispatchQueue.main.async {
                     self.pokemonList += newPokemonList
                     self.offset += newPokemonList.count
