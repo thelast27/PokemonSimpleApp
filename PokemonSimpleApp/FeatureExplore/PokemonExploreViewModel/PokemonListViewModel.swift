@@ -13,13 +13,12 @@ class PokemonListViewModel: ObservableObject {
     let getPokemonListUseCase: GetPokemonListUseCase = GetPokemonListUseCase(pokemonRepository: ExploreRepository.shared)
     
     @Published private var offset: Int = 0
-    @Published var pokemonList: [PokemonEntity] = []
-    @Environment(\.managedObjectContext) var context
+    @Published var pokemonList: [PokemonEntity] = []    
     
     func loadMore() async throws {
         Task {
             do {
-                let newPokemonList = try await getPokemonListUseCase.execute(context: context, limit: limit, offset: offset)
+                let newPokemonList = try await getPokemonListUseCase.execute(context: CoreDataManager.shared.context, limit: limit, offset: offset)
                 DispatchQueue.main.async {
                     self.pokemonList += newPokemonList
                     self.offset += newPokemonList.count
