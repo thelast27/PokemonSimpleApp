@@ -171,12 +171,12 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		4DBDCD982B7E2475002BD1D7 /* Presentation */ = {
+		4DBDCD982B7E2475002BD1D7 /* PokemonDetailView */ = {
 			isa = PBXGroup;
 			children = (
 				4DBDCD992B7E2495002BD1D7 /* PokemonDetailView.swift */,
 			);
-			path = Presentation;
+			path = PokemonDetailView;
 			sourceTree = "<group>";
 		};
 		4DC152282B7E3AD3002B64EB /* Services */ = {
@@ -221,78 +221,30 @@
 		4DC152492B7E4834002B64EB /* FeatureDetail */ = {
 			isa = PBXGroup;
 			children = (
-				4DC152542B7E4953002B64EB /* Data */,
-				4DC1524A2B7E4893002B64EB /* Domain */,
-				4DBDCD982B7E2475002BD1D7 /* Presentation */,
+				4DC1525B2B7E49A7002B64EB /* PokemonDetailModel */,
+				4DBDCD982B7E2475002BD1D7 /* PokemonDetailView */,
+				4DC1524B2B7E48A6002B64EB /* PokemonDetailViewModel */,
 			);
 			path = FeatureDetail;
 			sourceTree = "<group>";
 		};
-		4DC1524A2B7E4893002B64EB /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				4DC152512B7E4915002B64EB /* Entities */,
-				4DC1524E2B7E48EB002B64EB /* Repositories */,
-				4DC1524B2B7E48A6002B64EB /* UseCase */,
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
-		4DC1524B2B7E48A6002B64EB /* UseCase */ = {
-			isa = PBXGroup;
-			children = (
-				4DC1524C2B7E48BB002B64EB /* PokemonDetailUseCase.swift */,
-			);
-			path = UseCase;
-			sourceTree = "<group>";
-		};
-		4DC1524E2B7E48EB002B64EB /* Repositories */ = {
-			isa = PBXGroup;
-			children = (
-				4DC1524F2B7E48FE002B64EB /* DetailRepositoryProtocol.swift */,
-			);
-			path = Repositories;
-			sourceTree = "<group>";
-		};
-		4DC152512B7E4915002B64EB /* Entities */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Entities;
-			sourceTree = "<group>";
-		};
-		4DC152542B7E4953002B64EB /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				4DC1525B2B7E49A7002B64EB /* Model */,
-				4DC152582B7E4980002B64EB /* Repositories */,
-				4DC152552B7E495A002B64EB /* DataSource */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		4DC152552B7E495A002B64EB /* DataSource */ = {
-			isa = PBXGroup;
-			children = (
-				4DC152562B7E4967002B64EB /* DetailDataSource.swift */,
-			);
-			path = DataSource;
-			sourceTree = "<group>";
-		};
-		4DC152582B7E4980002B64EB /* Repositories */ = {
+		4DC1524B2B7E48A6002B64EB /* PokemonDetailViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				4DC152592B7E4999002B64EB /* DetailRepository.swift */,
+				4DC152562B7E4967002B64EB /* DetailDataSource.swift */,
+				4DC1524F2B7E48FE002B64EB /* DetailRepositoryProtocol.swift */,
+				4DC1524C2B7E48BB002B64EB /* PokemonDetailUseCase.swift */,
 			);
-			path = Repositories;
+			path = PokemonDetailViewModel;
 			sourceTree = "<group>";
 		};
-		4DC1525B2B7E49A7002B64EB /* Model */ = {
+		4DC1525B2B7E49A7002B64EB /* PokemonDetailModel */ = {
 			isa = PBXGroup;
 			children = (
 				4DC1525C2B7E49B4002B64EB /* PokemonDetailModel.swift */,
 			);
-			path = Model;
+			path = PokemonDetailModel;
 			sourceTree = "<group>";
 		};
 		4DE361FA2B7CBD76006B7DD8 = {
