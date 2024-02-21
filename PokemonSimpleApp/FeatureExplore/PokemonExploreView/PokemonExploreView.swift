@@ -18,7 +18,6 @@ struct PokemonExploreView: View {
         NavigationStack {
             VStack {
                 List {
-                    //                    if results.isEmpty || !results.isEmpty && !vm.pokemonList.isEmpty {
                     ForEach(vm.pokemonList, id: \.self) { pokemon in
                         NavigationLink(destination: PokemonDetailView(id: pokemon.id)) {
                             PokemonListView(pokemon: pokemon)
@@ -34,7 +33,6 @@ struct PokemonExploreView: View {
                                 }
                         }
                     }
-                    //                    }
                 }
                 .navigationTitle("Explore Pokemons 🐉")
                 
