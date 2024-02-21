@@ -7,13 +7,11 @@
 
 import Foundation
 
-class NetworkUtils {
-    
-    static let shared = NetworkUtils()
+class NetworkManager {
     
     func fetch<T: Codable>(from url: URL) async throws -> T {
         var request = URLRequest(url: url)
-        request.timeoutInterval = Constants.pokeApiTimeoutInterval
+        request.timeoutInterval = PokemonService.pokeApiTimeoutInterval
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
@@ -32,9 +30,7 @@ class NetworkUtils {
         
         URLSession.shared.dataTask(with: url) { data, _, error in
             
-            guard let data = data, error == nil else {
-                return
-            }
+            guard let data = data, error == nil else { return }
         }.resume()
     }
 }

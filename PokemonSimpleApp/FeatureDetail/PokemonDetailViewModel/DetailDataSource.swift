@@ -9,10 +9,10 @@ import Foundation
 
 class DetailDataSource {
     func fetchPokemonDetail(id: Int) async throws -> PokemonDetailModel {
-        guard let url: URL = Constants.APIEndpoint.getPokemonDetails(id: id).url else {
+        guard let url: URL = PokemonService.APIEndpoint.getPokemonDetails(id: id).url else {
             throw URLError(.badURL)
         }
         
-        return try await NetworkUtils.shared.fetch(from: url)
+        return try await NetworkManager().fetch(from: url)
     }
 }

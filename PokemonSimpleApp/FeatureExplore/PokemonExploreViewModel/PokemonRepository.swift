@@ -9,7 +9,6 @@ import Foundation
 import CoreData
 
 class ExploreRepository: PokemonRepositoryProtocol {
-    static let shared = ExploreRepository()
     
     private let exploreDataSource = ExploreDataSource()
     
